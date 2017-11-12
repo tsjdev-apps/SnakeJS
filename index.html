@@ -25,9 +25,16 @@
             color: #333333; 
             font-family: 'Lucida Sans', Arial, sans-serif; 
             font-size: 16px; 
-            line-height: 26px; 
-            text-indent: 30px; 
-            margin: 29px; 
+            margin: 29px 0px; 
+        }
+
+        button {
+            background-color: #333333; 
+            color:#efefef;
+            border: 2px solid #333333;
+            border-radius: 10px;
+            width: 50px;
+            height: 50px;            
         }
 
         .centered {
@@ -41,7 +48,11 @@
       <h1>SnakeJS</h1>
       <canvas id="gameCanvas" class="centered" width="400" height="400"></canvas>   
       <p id="scoreLabel"></p>
-
+      <button class="button" onclick="move(40)" type="button">↓</button>
+      <button class="button" onclick="move(38)" type="button">↑</button>     
+      <button class="button" onclick="move(37)" type="button">←</button>
+      <button class="button" onclick="move(39)" type="button">→</button>
+   
       <script>
         window.onload=function() {
             gameCanvas = document.getElementById("gameCanvas");
