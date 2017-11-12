@@ -21,6 +21,15 @@
             margin: 58px; 
         }
 
+        p { 
+            color: #333333; 
+            font-family: 'Lucida Sans', Arial, sans-serif; 
+            font-size: 16px; 
+            line-height: 26px; 
+            text-indent: 30px; 
+            margin: 29px; 
+        }
+
         .centered {
             margin: 0 auto;
             text-align: left;
@@ -31,10 +40,13 @@
   <body>
       <h1>SnakeJS</h1>
       <canvas id="gameCanvas" class="centered" width="400" height="400"></canvas>   
+      <p id="scoreLabel"></p>
 
       <script>
         window.onload=function() {
             gameCanvas = document.getElementById("gameCanvas");
+            scoreLabel = document.getElementById("scoreLabel");
+            scoreLabel.innerHTML = "Score: 0";
             gameCanvasContext = gameCanvas.getContext("2d");
             document.addEventListener("keydown", keyPressed);
             setInterval(game, 100);
@@ -46,14 +58,18 @@
         appleY = 15;
         velocityX = 0;
         velocityY = 0;
+        xS = 0;
+        yS = 0;
         gameSize = 20;
         tileCount = 20;
+        score = 0;
         trail=[];
         tailLength = 5;
+        start = true;
         
         function game() {
-            playerX+=velocityX;
-            playerY+=velocityY;
+            playerX += velocityX;
+            playerY += velocityY;
         
             if(playerX < 0) {
                 playerX = tileCount - 1;
@@ -77,6 +93,15 @@
                 gameCanvasContext.fillRect(trail[i].x * gameSize, trail[i].y * gameSize, gameSize - 2, gameSize - 2);
                 if(trail[i].x === playerX && trail[i].y === playerY) {
                     tailLength = 5;
+
+                    if (!start) {
+                        alert("Game over!\n\nYou've recieved " + score.toString(10) + " points!");
+    
+                        score = 0;
+                        scoreLabel.innerHTML = "Score: " + score.toString(10);
+                    }
+                } else {
+                    start = false;
                 }
             }
 
@@ -88,6 +113,8 @@
              
             if(appleX === playerX && appleY === playerY) {
                 tailLength++;
+                score += 25;
+                scoreLabel.innerHTML = "Score: " + score.toString(10);
                 appleX = Math.floor(Math.random() * tileCount);
                 appleY = Math.floor(Math.random() * tileCount);
             }
@@ -97,7 +124,11 @@
         }
 
         function keyPressed(evt) {
-            switch(evt.keyCode) {
+            move(evt.keyCode);
+        }
+
+        function move(key) {
+            switch(key) {
                 case 37:
                     velocityX = -1;
                     velocityY = 0;
@@ -114,6 +145,18 @@
                     velocityX = 0;
                     velocityY = 1;
                     break;
+            }
+
+            if(xS + velocityX === 0 && velocityX !== 0) {
+                velocityX = xS;
+            } else {
+                xS = velocityX;
+            }
+            
+            if(yS+velocityY === 0 && velocityY !== 0) {
+                velocityY = yS;
+            } else {
+                yS = velocityY;
             }
         }
       </script>
