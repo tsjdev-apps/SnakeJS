@@ -135,24 +135,29 @@
         }
 
         function keyPressed(evt) {
+            console.log(evt.keyCode);
             move(evt.keyCode);
         }
 
         function move(key) {
             switch(key) {
                 case 37:
+                case 65:
                     velocityX = -1;
                     velocityY = 0;
                     break;
                 case 38:
+                case 87:
                     velocityX = 0;
                     velocityY = -1;
                     break;
                 case 39:
+                case 68:
                     velocityX = 1;
                     velocityY = 0;
                     break;
                 case 40:
+                case 83:
                     velocityX = 0;
                     velocityY = 1;
                     break;
